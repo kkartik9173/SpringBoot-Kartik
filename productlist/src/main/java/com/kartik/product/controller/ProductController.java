@@ -21,7 +21,7 @@ public class ProductController {
     //Create Product
     private ProductService productService;
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO){
+    public ResponseEntity<?> createProduct(@RequestBody ProductDTO productDTO){
         System.out.println("under Post Mapping, product Controller");
         ProductDTO productDTOResponse = productService.createProductDTO(productDTO);
         return new ResponseEntity<>(productDTOResponse, HttpStatus.CREATED);
