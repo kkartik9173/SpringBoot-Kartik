@@ -1,6 +1,7 @@
 package com.kartik.product.controller;
 
 import com.kartik.product.dto.CategoryDTO;
+import com.kartik.product.exception.CategoryAlreadyExistException;
 import com.kartik.product.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,10 @@ public class CategoryController {
     //Create Category
     private CategoryService categoryService;
     @PostMapping
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
+    public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO){
         System.out.println("under Post Mapping, Category Controller");
-        CategoryDTO categoryDTOResponse = categoryService.createCategory(categoryDTO);
-        return new ResponseEntity<>(categoryDTOResponse, HttpStatus.CREATED);
+            CategoryDTO savedCategory = categoryService.createCategory(categoryDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
 
     //getCategories

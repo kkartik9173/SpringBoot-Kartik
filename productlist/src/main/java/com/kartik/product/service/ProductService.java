@@ -4,6 +4,8 @@ import com.kartik.product.dto.CategoryDTO;
 import com.kartik.product.dto.ProductDTO;
 import com.kartik.product.entity.Category;
 import com.kartik.product.entity.Product;
+import com.kartik.product.exception.CategoryAlreadyExistException;
+import com.kartik.product.exception.CategoryNotFoundException;
 import com.kartik.product.mapper.CategoryMapper;
 import com.kartik.product.mapper.ProductMapper;
 import com.kartik.product.repository.CategoryRepository;
@@ -23,7 +25,9 @@ public class ProductService {
 
     public ProductDTO createProductDTO(ProductDTO productDTO){
         Category category = categoryRepository.findById(productDTO.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("category Not Found"));
+                .orElseThrow(() -> new CategoryNotFoundException("Category id " + productDTO.getCategoryId() + " not found in the system"));
+
+        //CategoryAlreadyExistException("Category " + categoryDTO.getName() + " already exist!");
 
         System.out.println("Under Product Service");
 
