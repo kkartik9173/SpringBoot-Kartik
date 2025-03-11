@@ -5,27 +5,42 @@ import com.kartik.product.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
 @AllArgsConstructor
 public class CategoryController {
 
-    //getCategories
+    
     //Create Category
     private CategoryService categoryService;
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
         System.out.println("under Post Mapping, Category Controller");
-        return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
+        CategoryDTO categoryDTOResponse = categoryService.createCategory(categoryDTO);
+        return new ResponseEntity<>(categoryDTOResponse, HttpStatus.CREATED);
     }
 
-    //update Category
-    //get category by ID
-    //delete Product
+    //getCategories
+    @GetMapping
+    public List<CategoryDTO> getAllCategories(){
+        System.out.println("under Get Mapping, Category Controller");
+        return categoryService.getAllCategories();
 
+    }
+
+    //get category by ID
+    @GetMapping("/{id}")
+    public CategoryDTO getCategoryById(@PathVariable Long id){
+        System.out.println("under Get Mapping by ID, Category Controller");
+        return categoryService.getCategoryById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteCategory(@PathVariable Long id){
+        return categoryService.deleteCategory(id);
+    }
 }
