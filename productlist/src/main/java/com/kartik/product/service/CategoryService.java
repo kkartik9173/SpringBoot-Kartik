@@ -54,6 +54,4 @@ public class CategoryService {
 
         return "Category "+ id + " has deleted successfully";
     }
-
-
 }
