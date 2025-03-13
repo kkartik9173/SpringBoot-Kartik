@@ -1,0 +1,17 @@
+Spring Security:-
+	Basic Authentication
+	Token-Based Authentication (JWT)
+	OAuth2
+
+Basic Authentication:-
+    Simple Method where user provides a username and password with each request.
+    Credential are typically sent in the Authorization header encoded in Base64
+Advantages:-
+    -Easy to implement
+    -Requires minimal configuration to set up
+    -No session management, its stateless, each request contain the credentials, eliminating the need for the session
+     management on the server
+    Works Well for the small applications, internal services or API is with the limited user base and security req.
+
+Limitations- credentials are easily decoded, so it`s important to use https with API.
+To implement adding the roles and initially add dependency of security to the pom.

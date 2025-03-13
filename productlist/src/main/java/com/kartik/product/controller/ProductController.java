@@ -11,6 +11,7 @@ import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class ProductController {
             responseCode = "201",
             description = "CREATED"
     )
+    @PreAuthorize("hasAuthority('ROLE_SELLER')")
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody ProductDTO productDTO){
         System.out.println("under Post Mapping, product Controller");
@@ -68,6 +70,7 @@ public class ProductController {
             summary = "Delete product by Id",
             description = "REST API to delete product by Id"
     )
+    @PreAuthorize("hasAuthority('ROLE_SELLER')")
     @DeleteMapping("/{id}")
     public String deleteCategory(@PathVariable Long id){
         return productService.deleteProduct(id);
@@ -78,6 +81,7 @@ public class ProductController {
             summary = "Update product by Id",
             description = "REST API to update product by Id"
     )
+    @PreAuthorize("hasAuthority('ROLE_SELLER')")
     @PutMapping("/{id}")
     public ProductDTO updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO){
         return productService.updateProduct(id, productDTO);

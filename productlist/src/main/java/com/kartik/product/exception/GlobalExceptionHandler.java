@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exceptionResponseDTO);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exceptionResponseDTO);
     }
 
 
