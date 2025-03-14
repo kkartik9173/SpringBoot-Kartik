@@ -1,17 +1,60 @@
-Spring Security:-
+##Spring Security:-
 	Basic Authentication
 	Token-Based Authentication (JWT)
 	OAuth2
 
-Basic Authentication:-
+1)Basic Authentication:-
     Simple Method where user provides a username and password with each request.
     Credential are typically sent in the Authorization header encoded in Base64
-Advantages:-
-    -Easy to implement
-    -Requires minimal configuration to set up
-    -No session management, its stateless, each request contain the credentials, eliminating the need for the session
-     management on the server
-    Works Well for the small applications, internal services or API is with the limited user base and security req.
+    Advantages:-
+        -Easy to implement
+        -Requires minimal configuration to set up
+        -No session management, its stateless, each request contain the credentials, eliminating the need for the session
+         management on the server
+        Works Well for the small applications, internal services or API is with the limited user base and security req.
 
-Limitations- credentials are easily decoded, so it`s important to use https with API.
-To implement adding the roles and initially add dependency of security to the pom.
+        Limitations- credentials are easily decoded, so it`s important to use https with API.
+            To implement adding the roles and initially add dependency of security to the pom.
+
+2)JWT(JSON WEB TOKEN)
+    is a secure way to send the information between two parties.
+    It's often used in API`s to help authenticate the users without storing their login status on the server.
+    JWT has 3 main parts:-
+        1) Header:-
+                It contain the token type which is JWT and Algorithms which specifies signing algorithms(eg. HS256).
+        2) Payload:-
+                This is the core content of th eJWT, containing claims(information) about the use and metadata
+        3) Signature:-
+                This is the seal of approval, ensuring the token's integrity:
+                It's created by the header and payload and signing them using a secret key(or a private key for asymmetric algorithms).
+
+    Flow of JWT authentication and Authorization
+    1. User Login Request
+        Client sends the Post request with username and password.
+    2. Authenticate User(AuthenticationManager)
+        Use `AuthenticationManager.authenticate()` to verify credentials
+    If Authentications is Successful
+    3. Generate JWT Token
+        Create token using JwtTokenUtil with:-
+            -Subject(e.g. username)
+            -IssuedAt And Expiration times
+            -Signature with secret key
+    4. Return JWT Token in Response
+        Send JWT Token to Client in HTTP response
+    5. Client Stores JWT Token
+        Store token in local storage or cookies
+    6. Client Request wth Authorization Header
+        For Future requests to secured endpoints, client includes token in Authorization header.
+        Authorization: Bearer<JWT_TOKEN>
+    7. JWT Validation (JwtAuthenticationFilter)
+        Filter intercepts request:
+        Extracts token from header
+        Validates the token`s signatures, expiration and subject.
+    If token is Valid
+        8. Access Granted
+            Set SecurityContext with user details;
+            grant access to resource.
+
+    If Token is Invalid or Expired.
+        9. Access Denied
+            Return HTTP 401 Unauthorized.

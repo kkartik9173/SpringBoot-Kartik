@@ -20,7 +20,6 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public CategoryDTO createCategory(CategoryDTO categoryDTO){
-        System.out.println("Under Category Service");
         Optional<Category> optionalCategory = categoryRepository.findByName(categoryDTO.getName());
         if(optionalCategory.isPresent()){
             throw new CategoryAlreadyExistException("Category " + categoryDTO.getName() + " already exist!");

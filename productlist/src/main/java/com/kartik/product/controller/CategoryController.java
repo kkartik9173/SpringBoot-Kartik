@@ -38,7 +38,6 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO){
-        System.out.println("under Post Mapping, Category Controller");
             CategoryDTO savedCategory = categoryService.createCategory(categoryDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
@@ -50,7 +49,6 @@ public class CategoryController {
     )
     @GetMapping
     public List<CategoryDTO> getAllCategories(){
-        System.out.println("under Get Mapping, Category Controller");
         return categoryService.getAllCategories();
 
     }
@@ -62,7 +60,6 @@ public class CategoryController {
     )
     @GetMapping("/{id}")
     public CategoryDTO getCategoryById(@PathVariable Long id){
-        System.out.println("under Get Mapping by ID, Category Controller");
         return categoryService.getCategoryById(id);
     }
 
