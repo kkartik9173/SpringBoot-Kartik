@@ -38,7 +38,6 @@ public class ProductController {
     @PreAuthorize("hasAuthority('ROLE_SELLER')")
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody ProductDTO productDTO){
-        System.out.println("under Post Mapping, product Controller");
         ProductDTO productDTOResponse = productService.createProductDTO(productDTO);
         return new ResponseEntity<>(productDTOResponse, HttpStatus.CREATED);
     }
@@ -50,7 +49,6 @@ public class ProductController {
     )
     @GetMapping
     public List<ProductDTO> getAllProducts(){
-        System.out.println("under Get Mapping, Products Controller");
         return productService.getAllProducts();
 
     }
@@ -61,7 +59,6 @@ public class ProductController {
     )
     @GetMapping("/{id}")
     public ProductDTO getProductById(@PathVariable Long id){
-        System.out.println("under Get Mapping by ID, Category Controller");
         return productService.getProductById(id);
     }
 

@@ -1,4 +1,4 @@
-package com.kartik.product.exception;
+package com.kartik.product.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
