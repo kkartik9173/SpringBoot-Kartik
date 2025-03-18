@@ -42,6 +42,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
+		<!-- Spring Security with oauth2 Starts -->
+		<!-- starter-security is added above -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-resource-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+		</dependency>
+		<!-- Spring Security with oauth2 Starts -->
+
 		<!-- Spring Security with JWT Starts -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -59,6 +72,7 @@
 			<version>0.11.5</version>
 		</dependency>
 		<!-- Spring Security with JWT Ends-->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>

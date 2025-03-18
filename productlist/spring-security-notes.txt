@@ -2,7 +2,6 @@
 	Basic Authentication
 	Token-Based Authentication (JWT)
 	OAuth2
-
 1)Basic Authentication:-
     Simple Method where user provides a username and password with each request.
     Credential are typically sent in the Authorization header encoded in Base64
@@ -12,10 +11,8 @@
         -No session management, its stateless, each request contain the credentials, eliminating the need for the session
          management on the server
         Works Well for the small applications, internal services or API is with the limited user base and security req.
-
         Limitations- credentials are easily decoded, so it`s important to use https with API.
             To implement adding the roles and initially add dependency of security to the pom.
-
 2)JWT(JSON WEB TOKEN)
     is a secure way to send the information between two parties.
     It's often used in API`s to help authenticate the users without storing their login status on the server.
@@ -27,7 +24,6 @@
         3) Signature:-
                 This is the seal of approval, ensuring the token's integrity:
                 It's created by the header and payload and signing them using a secret key(or a private key for asymmetric algorithms).
-
     Flow of JWT authentication and Authorization
     1. User Login Request
         Client sends the Post request with username and password.
@@ -54,7 +50,75 @@
         8. Access Granted
             Set SecurityContext with user details;
             grant access to resource.
-
     If Token is Invalid or Expired.
         9. Access Denied
             Return HTTP 401 Unauthorized.
+2)OAUTH
+    OAuth2 stands for Open authorization2
+    It is a protocol that allows to secure delegated access to the resources without sharing the credentials.
+    It enables users to grant access to their resources(like profiles, files, etc.) to third-party applications without
+     exposing sensitive information like password.
+    OAuth2 is an improved version of the original OAuth1 Protocol
+    It introduces significant changes and enhancements, which make it more flexible and secure.
+    OAuth was the first version of the standard(introduced in 2k7).
+    It is more complex and had limitations.
+    It used digital signatures to sign each request, which made it secure but harder to implement.
+    It requires direct interactiosn with the user credentials for each request, which was inconvenient.
+    OAuth 2.0;
+      Improved version of OAUth(introduced in 2012).
+      Simpler and more flexible compared to OAUth 1.0
+      Instead of digital signatures, it used access tokens for authentication, making it easier to implement.
+      More secure because the user`s credentials are not shared with the third party apps.
+      Tokens are used instead.
+      Supports different flows(e.g. Authorization Code, Client Credentials) for different scenario like mobiles apps, server-to-server communications etc.
+    Authorization Code FLow:
+        Best for webapp. How it works,
+                -> The client redirects the user to the authorization server(e.g. Google, Github) for login.
+                -> Once the user logs in, the Authorization server sends a temporary authorization code to the client.
+                -> The client then exchanges this code for an access token
+                -> It`s the most secure flow because the sensitive data never goes to the browser.
+    Client Credential Flow
+        Best for server-to-server communication. How it works,
+                -> The client directly authenticate with the Authorization Server using its Client ID and Secret.
+                -> The server responds with an access token.
+    Device Authorization Flow
+        (IoT device-> devices without keyboards or mouse)
+        Best for devices without browsers. How it works
+                -> The client(like a TV or console) displays a link and a code to the user.
+                -> The user visits the link on another device, enter the code and logs in.
+                -> THe client polls(keep checking) the Authorization Server until the user completes the login, then gets an access token.
+    PKCE- Proof Code for Code Exchange
+        (Improved authorization code flow), How it works:-
+                -> A variation of Authorization code flow designed for public clients(e.g. mobile apps,  SPAs) that cant securely store client secrets.
+                -> The Client generates a code challange and sends it with the request
+                -> During the token exchanges, the client proves it know the original code challenge.
+    What is OpenId Connect?
+                -> OpenID connect(OIDC) is a simple identity layer built ont he top of OAuth2.0.
+                -> It extends OAuth 2.0 by adding an authentication steps, which allows you to verify a user`s identity and fetch user profile information.
+                -> OIDC introduce s an ID Token that contains informations about the user(e.g. name, e-mail).
+                   This token is encoded in (JSON Web Token) format.
+
+                   http  --request
+                   OAuth --Authorization
+                   OIDC  --Authentication
+                OpenID connect add below details to Oauth2.0:
+                    -1) OIDC standarized the scopes to OpenID, profile, email.
+                    -2) Id Token using JWT standard.
+                    -3) OIDC exposed"userinfo" endpoint.
+
+                Authorization Server
+                        KEYCLOAK  opensource
+                        OKTA
+                        Amazon congnito
+
+    Implementiong the KEYCLOCK Open source, download and run locally- kc.bat start-dev --http-port=8180
+           Do create client in dashboard
+            http://localhost:8180/admin/master/console  (create user, or admin/admin)
+            create client
+            use end point
+                    "token_endpoint": "http://localhost:8180/realms/master/protocol/openid-connect/token",
+                    see post man for grant type, secret and client name and scope- openid, email, profile.
+       In code base add the dependency of
+                    ....oauth2-resource-server
+                    ....oauth2-jose
+
